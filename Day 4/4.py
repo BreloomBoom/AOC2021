@@ -73,9 +73,9 @@ def score(board, numbers):
     finishedboard, b, lastnostr = endboard(board, numbers)
     lastno = int(lastnostr)
     total = sum(finishedboard)
-    score = total * lastno
+    boardscore = total * lastno
 
-    return score
+    return boardscore
 
 def main():
     f = open("4.txt", "r")
