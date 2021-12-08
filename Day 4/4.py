@@ -52,8 +52,9 @@ def minboard(boards, numbers):
 
     minturns = min(turnlist)
     minindex = turnlist.index(minturns)
+    board = boards[minindex]
 
-    return minindex  
+    return board
 
 def maxboard(boards, numbers):
     turnlist = []
@@ -64,31 +65,28 @@ def maxboard(boards, numbers):
 
     maxturns = max(turnlist)
     maxindex = turnlist.index(maxturns)
+    board = boards[maxindex]
 
-    return maxindex  
+    return board
+
+def score(board, numbers):
+    finishedboard, b, lastnostr = endboard(board, numbers)
+    lastno = int(lastnostr)
+    total = sum(finishedboard)
+    score = total * lastno
+
+    return score
 
 def main():
     f = open("4.txt", "r")
     boards = f.read().split("\n\n")
-    f.close()
     numbers = boards.pop(0).split(",")
-
-    boardindex1 = minboard(boards, numbers)
-    board1 = boards[boardindex1]
-    finishedboard1, b1, lastnostr1 = endboard(board1, numbers)
-    lastno1 = int(lastnostr1)
-    total1 = sum(finishedboard1)
-    score1 = lastno1 * total1
+    f.close()
+    
+    score1 = score(minboard(boards, numbers), numbers)
+    score2 = score(maxboard(boards, numbers), numbers)
 
     print(f"For Puzzle 1: {score1}")
-
-    boardindex2 = maxboard(boards, numbers)
-    board2 = boards[boardindex2]
-    finishedboard2, b2, lastnostr2 = endboard(board2, numbers)
-    lastno2 = int(lastnostr2)
-    total2 = sum(finishedboard2)
-    score2 = lastno2 * total2
-
     print(f"For Puzzle 2: {score2}")
 
 if __name__ == "__main__":
