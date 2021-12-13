@@ -1,6 +1,6 @@
 from copy import deepcopy
 import re
-
+ 
 def process(file):
     f = open(file, "r")
     strings = f.read()
