@@ -68,7 +68,6 @@ def dfs2(edge, point, path, paths, small, again):
     if point == "end":
         if path not in paths:
             paths.append(path)
-            print(path)
 
     for i in next_node:
         if i not in small:
