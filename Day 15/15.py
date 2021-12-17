@@ -49,8 +49,8 @@ def grapher(matrix):
 def dijkstra(graph, starting_vertex, goal):
     distances = {vertex: float('infinity') for vertex in graph}
     distances[starting_vertex] = 0
-
     pq = [(0, starting_vertex)]
+
     while len(pq) > 0:
         current_distance, current_vertex = heapq.heappop(pq)
 
