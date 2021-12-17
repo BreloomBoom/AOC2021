@@ -1,3 +1,5 @@
+import heapq
+
 def process(file):
     f = open(file, "r")
     strings = f.read().split()
@@ -44,47 +46,25 @@ def grapher(matrix):
 
     return graph
 
-def dijkstra(graph, start, end):
-    shortest = {}
-    track = {}
-    unseen = graph
-    inf = 9999999999999999999999
-    path = []
+def dijkstra(graph, starting_vertex, goal):
+    distances = {vertex: float('infinity') for vertex in graph}
+    distances[starting_vertex] = 0
 
-    for node in unseen:
-        shortest[node] = inf
-    shortest[start] = 0
+    pq = [(0, starting_vertex)]
+    while len(pq) > 0:
+        current_distance, current_vertex = heapq.heappop(pq)
 
-    while unseen:
-        min_dist = None
-        count = -1
+        if current_distance > distances[current_vertex]:
+            continue
 
-        for node in unseen:
-            count += 1
-            if min_dist is None:
-                min_dist = node
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
 
-            elif shortest[node] < shortest[min_dist]:
-                min_dist = node
-            
-        options = graph[min_dist].items()
-        
-        for child, weight in options:
-            if weight + shortest[min_dist] < shortest[child]:
-                shortest[child] = weight + shortest[min_dist]
-                track[child] = min_dist
-        
-        unseen.pop(min_dist)
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
 
-    current = end
-
-    while current != start:
-        path.insert(0, current)
-        current = track[current]
-
-    path.insert(0, start)
-
-    return shortest[end]
+    return distances[goal]
 
 def sol1(inputs):
     matrix = grid(inputs)
@@ -153,7 +133,7 @@ def main():
     inputs = "15.txt"
 
     solution1 = sol1(inputs)
-    solution2 = sol2(inputs) # this may have taken like an hour :skull:
+    solution2 = sol2(inputs)
 
     print(f"For Puzzle 1: {solution1}")
     print(f"For Puzzle 2: {solution2}")
